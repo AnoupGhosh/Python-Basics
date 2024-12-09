@@ -31,8 +31,8 @@ print(course)
 course = 'Python for Beginners'
 print(course[0])
 print(course[-1])
-name = "Hello"
-print(name[1:-1])
+hello = "Hello"
+print(hello[1:-1])
 
 first_name = 'John'
 last_name = 'Smith'
@@ -49,13 +49,12 @@ print(course.find('P'))
 print(course.replace('P', 'J'))
 print('P' in course)
 
-
 # Arithmetic Operations
 
-print(10/3)
-print(10//3)
+print(10 / 3)
+print(10 // 3)
 print(10 % 3)
-print(10**3)
+print(10 ** 3)
 
 import math
 
@@ -85,7 +84,6 @@ elif len(name) > 50:
 else:
     print('Name looks good!')
 
-
 # While Loop
 
 i = 1
@@ -93,7 +91,6 @@ while i <= 5:
     print('*' * i)
     i += 1
 print('Done')
-
 
 # For Loop
 
@@ -110,7 +107,6 @@ for price in prices:
     total_price += price
 print(total_price)
 
-
 # 2D List
 
 matrix = [
@@ -122,7 +118,6 @@ print(matrix[0][0])
 for row in matrix:
     for item in row:
         print(item)
-
 
 numbers = [1, 278, 3, 4, 5, 5, 6, 7]
 numbers.append(20)
@@ -143,7 +138,6 @@ new_numbers.append(88)
 print(new_numbers)
 numbers.clear()
 print(numbers)
-
 
 # Tuples
 
@@ -166,9 +160,10 @@ print(customers["name"])
 print(customers.get("birth_date", "Jan 1 1980"))
 print(customers)
 
+
 # Function
-def greet_user(name):
-    print(f'Hi {name}')
+def greet_user(f_name):
+    print(f'Hi {f_name}')
 
 
 greet_user("John")
@@ -180,6 +175,7 @@ try:
     print(age)
 except Exception as exp:
     print(exp)
+
 
 # Class
 
@@ -199,9 +195,11 @@ point1 = Point("John")
 point1.draw()
 point1.move()
 
+
 # Inheritance
 
 class Animal:
+
     def walk(self):
         print("Walk")
 
@@ -217,22 +215,21 @@ class Cat(Animal):
 dog = Dog()
 dog.walk()
 
-
 # Modules
 # https://docs.python.org/3/py-modindex.html
 
 import utils
 from utils import kg_to_lbs
+
 print(kg_to_lbs(75))
 print(utils.kg_to_lbs(70))
-
 
 # Package
 from package import module
 import package.module
+
 package.module.calling()
 module.calling()
-
 
 # Path
 from pathlib import Path
@@ -250,17 +247,29 @@ path = Path()
 for file in path.glob('*'):
     print(file)
 
-
 # Working with OpenPyXl
 
 import openpyxl as xl
+from openpyxl.chart import BarChart, Reference
+
 wb = xl.load_workbook('transactions.xlsx')
 sheet = wb['Sheet1']
 print(sheet.cell(1, 1).value)
 
-for row in range(2, sheet.max_row+1):
+for row in range(2, sheet.max_row + 1):
     cell = sheet.cell(row, 3)
     corrected_price = cell.value * 0.9
     corrected_price_cell = sheet.cell(row, 4)
     corrected_price_cell.value = corrected_price
-wb.save('corrected_file.xlsx')
+
+values = Reference(sheet,
+          min_row=2,
+          max_row=sheet.max_row,
+          min_col=4,
+          max_col=4)
+
+chart = BarChart()
+chart.add_data(values)
+sheet.add_chart(chart, 'e2')
+
+wb.save('transactions_updated.xlsx')
