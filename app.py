@@ -165,3 +165,102 @@ customers = {
 print(customers["name"])
 print(customers.get("birth_date", "Jan 1 1980"))
 print(customers)
+
+# Function
+def greet_user(name):
+    print(f'Hi {name}')
+
+
+greet_user("John")
+
+# Exception
+
+try:
+    age = int(input("Age: "))
+    print(age)
+except Exception as exp:
+    print(exp)
+
+# Class
+
+class Point:
+
+    def __init__(self, name):
+        self.name = name
+
+    def move(self):
+        print(f"move {self.name}")
+
+    def draw(self):
+        print(f"draw {self.name}")
+
+
+point1 = Point("John")
+point1.draw()
+point1.move()
+
+# Inheritance
+
+class Animal:
+    def walk(self):
+        print("Walk")
+
+
+class Dog(Animal):
+    pass
+
+
+class Cat(Animal):
+    pass
+
+
+dog = Dog()
+dog.walk()
+
+
+# Modules
+# https://docs.python.org/3/py-modindex.html
+
+import utils
+from utils import kg_to_lbs
+print(kg_to_lbs(75))
+print(utils.kg_to_lbs(70))
+
+
+# Package
+from package import module
+import package.module
+package.module.calling()
+module.calling()
+
+
+# Path
+from pathlib import Path
+
+# Absolute Path
+# Relative Path
+
+path = Path("package")
+print(path.exists())
+path_2 = Path("module_2")
+path_2.mkdir()
+path_2.rmdir()
+
+path = Path()
+for file in path.glob('*'):
+    print(file)
+
+
+# Working with OpenPyXl
+
+import openpyxl as xl
+wb = xl.load_workbook('transactions.xlsx')
+sheet = wb['Sheet1']
+print(sheet.cell(1, 1).value)
+
+for row in range(2, sheet.max_row+1):
+    cell = sheet.cell(row, 3)
+    corrected_price = cell.value * 0.9
+    corrected_price_cell = sheet.cell(row, 4)
+    corrected_price_cell.value = corrected_price
+wb.save('corrected_file.xlsx')
